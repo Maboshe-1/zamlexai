@@ -1,0 +1,117 @@
+{# core/prompts/contracts/employment_template.txt #}
+EMPLOYMENT AGREEMENT
+
+This Employment Agreement (“Agreement”) is made on {{ effective_date }} between:
+
+**Employer:**  
+{{ party_a }}  
+{{ party_a_address|default:"[Employer Address]" }}
+
+**Employee:**  
+{{ party_b }}  
+{{ party_b_address|default:"[Employee Address]" }}
+
+---
+
+## 1. Position  
+1.1 The Employer employs the Employee as **{{ position }}**.  
+1.2 The Employee shall perform the duties set forth in **Schedule A**, and any other reasonable duties assigned.  
+
+---
+
+## 2. Commencement & Term  
+2.1 **Effective Date:** {{ effective_date }}  
+2.2 **Term:** This Agreement is [permanent/fixed‑term] as indicated: {{ term }}.  
+2.3 **Probation:** A probationary period of {{ probation_period|default:"3 months" }} applies, during which either party may terminate on {{ probation_notice|default:"one week’s" }} notice.  
+
+---
+
+## 3. Place of Work  
+3.1 **Primary Location:** {{ work_location|default:"Lusaka office" }}  
+3.2 **Other Locations:** The Employee may be required to work at other sites as reasonably requested.  
+
+---
+
+## 4. Working Hours  
+4.1 **Standard Hours:** {{ working_hours|default:"Monday–Friday, 8 am–5 pm (40 hrs/week)" }}  
+4.2 **Overtime:** Overtime must be pre‑approved and will be compensated under company policy.  
+
+---
+
+## 5. Remuneration  
+5.1 **Base Salary:** {{ compensation }} per month, paid monthly in arrears.  
+5.2 **Statutory Deductions:** Income tax and social security contributions will be made in accordance with Zambian law.  
+
+---
+
+## 6. Leave Entitlements  
+6.1 **Annual Leave:** {{ annual_leave|default:"21 days per year" }}.  
+6.2 **Sick Leave:** {{ sick_leave|default:"14 days per year upon certification" }}.  
+6.3 **Other Statutory Leave:** As prescribed by the Employment Act.  
+
+---
+
+## 7. Benefits & Allowances  
+7.1 **Medical Insurance:** {{ medical_insurance|default:"Group medical cover"}}, for Employee and {{ dependents|default:"up to two dependents" }}.  
+7.2 **Pension Contribution:** Employer contributes {{ pension_contribution|default:"5% of salary" }} to NAPSA.  
+7.3 **Other Allowances:**  
+  - Transport: {{ transport_allowance|default:"ZMW 2,000/month" }}  
+  - Phone/Internet: {{ phone_allowance|default:"USD 50/month (reimbursed)" }}  
+
+---
+
+## 8. Confidentiality & Data Protection  
+8.1 **Confidentiality:** The Employee shall not disclose any Confidential Information during or after employment.  
+8.2 **Data Protection:** Personal data processed in accordance with the Data Protection Act, 2021.  
+
+---
+
+## 9. Intellectual Property  
+All inventions and works created during employment are the Employer’s sole property. Employee assigns all such rights.  
+
+---
+
+## 10. Non‑Competition & Non‑Solicitation  
+10.1 **Non‑Compete:** For {{ non_compete_duration|default:"6 months" }} post‑termination, Employee shall not compete within Zambia.  
+10.2 **Non‑Solicitation:** For {{ non_solicit_duration|default:"12 months" }}, Employee shall not solicit clients or staff.  
+
+---
+
+## 11. Disciplinary & Grievance  
+Employer’s disciplinary and grievance procedures (Annexure C) apply.  
+
+---
+
+## 12. Termination & Exit  
+12.1 **Notice Period:**  
+  - By Employer: {{ notice_employer|default:"1 month" }}  
+  - By Employee: {{ notice_employee|default:"1 month" }}  
+12.2 **Summary Dismissal:** For gross misconduct, without notice.  
+12.3 **Return of Property:** All Employer property must be returned upon exit.  
+
+---
+
+## 13. Dispute Resolution & Governing Law  
+13.1 **Dispute Resolution:** Mediation under Zambian Institute of Arbitrators Rules, then arbitration in Lusaka.  
+13.2 **Governing Law:** Laws of the Republic of Zambia.  
+
+---
+
+## 14. Entire Agreement & Variation  
+This Agreement (including Schedules & Annexures) is the entire understanding. Amendments only by written, signed document.  
+
+---
+
+## 15. Signatures  
+
+**Employer – {{ party_a }}**  
+Signature: _____________________ Date: __________________
+
+**Employee – {{ party_b }}**  
+Signature: _____________________ Date: __________________
+
+---
+
+### Schedule A – Job Description & KPIs  
+– [Attach detailed duties, KPIs, reporting line here]
+

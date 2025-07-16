@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="max-w-3xl mx-auto px-6 py-8 space-y-8">
+  <h1 class="text-3xl font-bold">Contract &amp; Transactional Drafting</h1>
+
+  <form method="post" class="space-y-4">
+    {% csrf_token %} {{ form.as_p }}
+    <button
+      class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+      type="submit"
+    >
+      Generate Draft
+    </button>
+  </form>
+
+  {% if draft %}
+  <div class="bg-white p-6 rounded-lg shadow-md prose">
+    <h2 class="text-2xl font-semibold mb-4">Drafted Contract</h2>
+    <pre class="whitespace-pre-wrap">{{ draft }}</pre>
+  </div>
+
+  <div class="bg-yellow-50 p-6 rounded-lg shadow-inner prose">
+    <h2 class="text-xl font-semibold mb-2 text-yellow-800">Risk Flagging</h2>
+    <pre class="whitespace-pre-wrap">{{ risk_report }}</pre>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

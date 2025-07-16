@@ -1,0 +1,43 @@
+=== sale_template.txt ===
+Generate a clean, professional Sale of Goods Agreement between {{party_a}} (“Seller”) and {{party_b}} (“Buyer”):
+
+1. **Effective Date**  
+   This Agreement is effective as of {{effective_date}}.  
+   Risk: Mis‑dating the Effective Date can cause performance lapses.
+
+2. **Description of Goods**  
+   Seller agrees to sell, and Buyer agrees to purchase, the goods described as: {{term}}.  
+   Risk: Vague descriptions invite disputes over quality or quantity.
+
+3. **Purchase Price & Payment**  
+   3.1 Purchase Price: {{term}}.  
+   3.2 Payment Terms: [e.g. 50% deposit upon signing, balance on delivery].  
+   3.3 Late Payment: [interest rate]% per annum on overdue amounts.  
+   Risk: Uncapped interest rates risk regulatory non‑compliance.
+
+4. **Delivery & Acceptance**  
+   4.1 Delivery Terms: {{delivery_terms}}.  
+   4.2 Inspection Period: Buyer has [days] days to inspect and reject non‑conforming goods.  
+   Risk: No inspection window can trap Buyer with defective goods.
+
+5. **Warranties & Limitation of Liability**  
+   5.1 Seller warrants title and conformity to specifications.  
+   5.2 Limitation: Seller’s liability capped at purchase price.  
+   Risk: Overly broad disclaimers may be void as unconscionable.
+
+6. **Risk of Loss**  
+   Title and risk pass to Buyer upon [delivery point].  
+   Risk: Mis‑specifying delivery point can shift risk improperly.
+
+7. **Confidentiality (if applicable)**  
+   Both parties agree not to disclose pricing or proprietary details.  
+   Risk: Not tailoring confidentiality obligations can over‑expose trade secrets.
+
+8. **Dispute Resolution & Governing Law**  
+   Disputes shall be resolved by [arbitration/mediation] under [Rules] in [Location].  
+   This Agreement shall be governed by the laws of [Jurisdiction].  
+   Risk: Mixing mediation and litigation provisions can cause procedural conflict.
+
+9. **Miscellaneous**  
+   Entire Agreement; Amendments; Severability; Assignment prohibited without consent; Notices.  
+   Risk: Omitting a “notice address” section may invalidate important communications.

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Sale of Goods Agreement</h1>
+
+  <form method="post" class="space-y-4">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">
+      Generate Sale Agreement
+    </button>
+  </form>
+
+  {% if draft %}
+    <section class="mt-8">
+      <h2>Your Sale Agreement Draft</h2>
+      <div class="prose bg-white p-4 rounded shadow">
+        <pre class="whitespace-pre-wrap">{{ draft }}</pre>
+      </div>
+
+      <h3 class="mt-6">Risk Flagging</h3>
+      <div class="prose bg-yellow-50 p-4 rounded">
+        <pre class="whitespace-pre-wrap">{{ risk_report }}</pre>
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}

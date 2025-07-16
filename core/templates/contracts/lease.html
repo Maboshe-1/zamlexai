@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link
+  href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+  rel="stylesheet"
+/>
+<style>
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 3px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto py-12 px-4 space-y-8">
+
+  <!-- Page Title -->
+  <h1 class="text-3xl font-extrabold text-gray-900 text-center">
+    Lease Agreement Generator
+  </h1>
+
+  <!-- Form Card -->
+  <div class="bg-white p-8 rounded-lg shadow-md">
+    <form method="post" class="space-y-6">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      <!-- Tenant & Landlord -->
+      <div class="grid gap-6 md:grid-cols-2">
+        <div>
+          <label for="{{ form.party_a.id_for_label }}" class="block text-gray-700 font-medium">
+            {{ form.party_a.label }}
+          </label>
+          {{ form.party_a }}
+          {{ form.party_a.errors }}
+        </div>
+        <div>
+          <label for="{{ form.party_b.id_for_label }}" class="block text-gray-700 font-medium">
+            {{ form.party_b.label }}
+          </label>
+          {{ form.party_b }}
+          {{ form.party_b.errors }}
+        </div>
+      </div>
+
+      <!-- Property & Term -->
+      <div class="grid gap-6 md:grid-cols-2">
+        <div>
+          <label for="{{ form.property_address.id_for_label }}" class="block text-gray-700 font-medium">
+            {{ form.property_address.label }}
+          </label>
+          {{ form.property_address }}
+          {{ form.property_address.errors }}
+        </div>
+        <div>
+          <label for="{{ form.term.id_for_label }}" class="block text-gray-700 font-medium">
+            {{ form.term.label }}
+          </label>
+          {{ form.term }}
+          {{ form.term.errors }}
+        </div>
+      </div>
+
+      <!-- Rent & Deposit -->
+      <div class="grid gap-6 md:grid-cols-2">
+        <div>
+          <label for="{{ form.rent_amount.id_for_label }}" class="block text-gray-700 font-medium">
+            {{ form.rent_amount.label }}
+          </label>
+          {{ form.rent_amount }}
+          {{ form.rent_amount.errors }}
+        </div>
+        <div>
+          <label for="{{ form.security_deposit.id_for_label }}" class="block text-gray-700 font-medium">
+            {{ form.security_deposit.label }}
+          </label>
+          {{ form.security_deposit }}
+          {{ form.security_deposit.errors }}
+        </div>
+      </div>
+
+      <!-- Custom Clauses -->
+      <div>
+        <label for="{{ form.custom_clauses.id_for_label }}" class="block text-gray-700 font-medium">
+          {{ form.custom_clauses.label }}
+        </label>
+        {{ form.custom_clauses }}
+        {{ form.custom_clauses.errors }}
+      </div>
+
+      <!-- Submit Button -->
+      <div class="text-right">
+        <button
+          type="submit"
+          class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg"
+        >
+          Generate Lease Agreement
+        </button>
+      </div>
+    </form>
+  </div>
+
+  {# Output Draft & Risk #}
+  {% if draft %}
+    <div class="space-y-6">
+
+      <!-- Draft Card -->
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-bold text-gray-800">Lease Agreement Draft</h2>
+          <button
+            id="copy-draft-btn"
+            class="text-indigo-600 hover:text-indigo-800 font-medium focus:outline-none"
+          >
+            Copy
+          </button>
+        </div>
+        <pre
+          id="draft-block"
+          class="whitespace-pre-wrap bg-gray-50 p-4 rounded border border-gray-200 overflow-y-auto scrollbar-thin max-h-80 text-gray-900"
+        >{{ draft }}</pre>
+      </div>
+
+      <!-- Risk Flagging Card -->
+      <div class="bg-yellow-50 p-6 rounded-lg shadow-inner">
+        <h3 class="text-xl font-semibold text-yellow-800 mb-2">Risk Flagging</h3>
+        <pre
+          class="whitespace-pre-wrap bg-white p-4 rounded border border-yellow-200 overflow-y-auto scrollbar-thin max-h-60 text-gray-900"
+        >{{ risk_report }}</pre>
+      </div>
+
+    </div>
+  {% endif %}
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const copyBtn = document.getElementById('copy-draft-btn');
+  const draftBlock = document.getElementById('draft-block');
+  if (copyBtn && draftBlock) {
+    copyBtn.addEventListener('click', () =>
+      navigator.clipboard.writeText(draftBlock.innerText)
+        .then(() => {
+          copyBtn.innerText = 'Copied!';
+          setTimeout(() => copyBtn.innerText = 'Copy', 2000);
+        })
+        .catch(() => alert('Copy failed.'))
+    );
+  }
+});
+</script>
+{% endblock %}

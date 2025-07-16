@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>AI Legal Assistant</title>
+
+    {# Allow child templates to inject extra CSS/JS here #}
+    {% block extra_head %}
+    {% endblock %}
+
+    {# A minimal default stylesheet #}
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background-color: #f9fafb;
+        color: #1f2937;
+      }
+      a {
+        color: #2563eb;
+      }
+    </style>
+  </head>
+
+  <body class="antialiased">
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>

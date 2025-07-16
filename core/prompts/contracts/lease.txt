@@ -1,0 +1,53 @@
+=== lease_template.txt ===
+Generate a comprehensive Lease Agreement between {{party_a}} (“Lessor”) and {{party_b}} (“Lessee”):
+
+1. **Definitions**  
+   1.1 “Premises” means the property located at {{property_desc}}.  
+   1.2 “Term” means the period commencing on {{effective_date}} and ending {{term}}.  
+   Risk: Failing to define “Premises” precisely can trigger boundary disputes.
+
+2. **Lease of Premises**  
+   Lessor hereby leases to Lessee, and Lessee leases from Lessor, the Premises for the Term.  
+   Risk: Not addressing fixtures vs. personal property may lead to removal disputes.
+
+3. **Rent & Security Deposit**  
+   3.1 Rent: {{rent_amount}} payable in equal installments on the [day] of each month.  
+   3.2 Late Fee: [percentage]% of overdue amount if not paid within [grace period] days.  
+   3.3 Security Deposit: {{security_deposit|default:"[amount]"}} refundable upon surrender less deductions for damage.  
+   Risk: Uncapped late fees can be deemed punitive and unenforceable.
+
+4. **Use of Premises**  
+   Lessee shall use the Premises solely for [permitted use] and comply with all applicable laws.  
+   Risk: Overly broad permitted‑use language can invalidate non‑commercial restraints.
+
+5. **Maintenance & Repairs**  
+   Lessee is responsible for ordinary maintenance; Lessor maintains structural components and major systems.  
+   Risk: Ambiguous repair obligations can lead to disputes over cost allocation.
+
+6. **Alterations**  
+   No alterations may be made without Lessor’s prior written consent.  
+   Lessee shall restore Premises to original condition upon termination.  
+   Risk: Omitting “restoration standard” can lead to wear‑and‑tear disagreements.
+
+7. **Insurance & Indemnity**  
+   Lessee shall maintain renter’s insurance with minimum liability coverage.  
+   Lessee indemnifies Lessor from claims arising out of Lessee’s use.  
+   Risk: Failure to require Lessor’s additional insured status may limit coverage.
+
+8. **Default & Remedies**  
+   Events of Default include non‑payment, breach of use, insolvency.  
+   Remedies: acceleration of rent, termination, recovery of damages.  
+   Risk: Not including a cure period may accelerate harsh outcomes.
+
+9. **Termination & Surrender**  
+   Upon expiration or earlier termination, Lessee shall vacate and return Premises broom‑clean.  
+   Risk: Lack of “holdover” terms can create statutory tenancy beyond the lease.
+
+10. **Dispute Resolution & Governing Law**  
+   All disputes resolved by [arbitration/mediation] under [Rules] in [Location].  
+   Governed by the laws of [Jurisdiction].  
+   Risk: Not specifying an arbitral institution may lead to procedural confusion.
+
+11. **Miscellaneous**  
+   Entire Agreement; Amendments; Severability; Assignment; Notices; Counterparts.  
+   Risk: Overlooking a “notices” clause may invalidate service of process.

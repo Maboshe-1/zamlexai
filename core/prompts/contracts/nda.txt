@@ -1,0 +1,53 @@
+=== nda_template.txt ===
+Generate a clean, professional Non‑Disclosure Agreement (“NDA”) between {{party_a}} (“Disclosing Party”) and {{party_b}} (“Receiving Party”):
+
+1. **Effective Date**  
+   The Effective Date of this Agreement is {{effective_date}}.  
+   Risk: Ensure the date aligns with commercial timelines; otherwise confidentiality may lapse prematurely.
+
+2. **Definitions**  
+   2.1 “Confidential Information” means all non‑public, proprietary, or sensitive information, whether oral, written, electronic, or tangible, disclosed by Disclosing Party to Receiving Party.  
+   Risk: Over‑broad definitions can unintentionally capture non‑sensitive data.
+
+3. **Obligations of Receiving Party**  
+   3.1 Maintain Confidential Information in strict confidence.  
+   3.2 Use it solely for evaluation of potential business transactions.  
+   3.3 Not disclose to any third party without prior written consent.  
+   Risk: Omitting a “no reverse engineering” clause may allow de‑facto IP discovery.
+
+4. **Exclusions**  
+   Confidential Information does not include information that:  
+   a) Is or becomes publicly available without breach;  
+   b) Was known to Receiving Party before disclosure;  
+   c) Is independently developed;  
+   d) Is rightfully received from a third party under no obligation of confidentiality.  
+   {% if exclusions %}  
+   Additional Exclusions: {{exclusions}}  
+   {% endif %}  
+   Risk: Too‑narrow exclusions can trap routine know‑how as confidential.
+
+5. **Term and Termination**  
+   This Agreement commences on the Effective Date and continues for {{term}} unless earlier terminated by mutual written agreement.  
+   Upon termination, Receiving Party shall return or destroy all Confidential Information.  
+   Risk: Failure to require certification of destruction may leave data lingering.
+
+6. **No License**  
+   Nothing herein grants any license under any patent, trademark, or copyright.  
+   Risk: Lack of clarity on IP ownership can lead to downstream disputes.
+
+7. **Remedies**  
+   Receiving Party acknowledges that unauthorized disclosure may cause irreparable harm.  
+   Disclosing Party may seek injunctive relief in addition to damages.  
+   Risk: Not requiring arbitration may expose parties to costly litigation.
+
+8. **Governing Law & Jurisdiction**  
+   This Agreement is governed by the laws of [Jurisdiction].  
+   Any dispute shall be resolved exclusively in the courts of [Location].  
+   Risk: Specifying multiple jurisdictions can render venue clauses unenforceable.
+
+9. **Miscellaneous**  
+   9.1 Entire Agreement.  
+   9.2 Amendments only by written instrument signed by both parties.  
+   9.3 Severability.  
+   9.4 Assignment prohibited without prior consent.  
+   Risk: Omitting an “assignment” clause can allow unwanted transfer of rights.

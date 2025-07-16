@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link
+  href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+  rel="stylesheet"
+/>
+<style>
+  .panel { @apply bg-white rounded-lg shadow-md flex flex-col; }
+  .panel-header { @apply px-6 py-4 font-bold text-xl; }
+  .panel-body { @apply px-6 py-4 flex-1 overflow-y-auto scrollbar-thin space-y-6; max-height:24rem; }
+  .irac-section { @apply space-y-2; }
+  .irac-section-title { @apply text-gray-800 font-semibold; }
+  .irac-section-text { @apply text-gray-700 leading-relaxed; }
+  .panel-footer { @apply px-6 py-4 border-t border-gray-200 space-y-3; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-screen-lg mx-auto px-4 py-10 space-y-10">
+
+  <h1 class="text-4xl font-extrabold text-center text-gray-900">
+    AI‑Powered Legal Argument Assistant
+  </h1>
+
+  <div class="grid gap-8 lg:grid-cols-2">
+
+    <!-- FOR the Client -->
+    <div class="panel border-l-4 border-indigo-600">
+      <div class="panel-header bg-indigo-50 text-indigo-700">
+        FOR the Client
+      </div>
+
+      <div class="panel-body">
+        {% if for_argument %}
+          {% for block in for_argument.split('\n\n') %}
+            {% if block.startswith:"C) **Conclusion:**" %}
+              <div class="irac-section">
+                <div class="irac-section-title">Conclusion</div>
+                <div class="irac-section-text">{{ block|cut:"C) **Conclusion:**"|linebreaksbr }}</div>
+              </div>
+            {% elif block.startswith:"R) **Rule & Precedent:**" %}
+              <div class="irac-section">
+                <div class="irac-section-title">Rule &amp; Precedent</div>
+                <div class="irac-section-text">{{ block|cut:"R) **Rule & Precedent:**"|linebreaksbr }}</div>
+              </div>
+            {% elif block.startswith:"E) **Explanation & Commentary:**" %}
+              <div class="irac-section">
+                <div class="irac-section-title">Explanation &amp; Commentary</div>
+                <div class="irac-section-text">{{ block|cut:"E) **Explanation & Commentary:**"|linebreaksbr }}</div>
+              </div>
+            {% elif block.startswith:"A) **Application:**" %}
+              <div class="irac-section">
+                <div class="irac-section-title">Application</div>
+                <div class="irac-section-text">{{ block|cut:"A) **Application:**"|linebreaksbr }}</div>
+              </div>
+            {% elif block.startswith:"R) **Rebuttal:**" %}
+              <div class="irac-section">
+                <div class="irac-section-title">Rebuttal</div>
+                <div class="irac-section-text">{{ block|cut:"R) **Rebuttal:**"|linebreaksbr }}</div>
+              </div>
+            {% elif block.startswith:"C) **Conclusion & Remedy:**" %}
+              <div class="irac-section">
+                <div class="irac-section-title">Conclusion &amp; Remedy</div>
+                <div class="irac-section-text">{{ block|cut:"C) **Conclusion & Remedy:**"|linebreaksbr }}</div>
+              </div>
+            {% else %}
+              {# Any stray paragraph #}
+              <div class="irac-section-text">{{ block|linebreaksbr }}</div>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <p class="text-gray-500 italic">No FOR-argument available.</p>
+        {% endif %}
+      </div>
+
+      <div class="panel-footer">
+        <textarea
+          id="for-instruction"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-200 focus:outline-none"
+          rows="2"
+          placeholder="e.g. Add a comparative example from Kenya…"
+        ></textarea>
+        <button
+          id="for-augment-btn"
+          data-side="for"
+          class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded-lg"
+        >
+          Ask / Augment Argument
+        </button>
+        {% if for_feedback %}
+        <div class="mt-2 bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded-lg">
+          <div class="font-semibold text-yellow-800">Feedback</div>
+          <div class="text-yellow-700">{{ for_feedback|linebreaks }}</div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- AGAINST the Client -->
+    <div class="panel border-r-4 border-red-600">
+      <div class="panel-header bg-red-50 text-red-700">
+        AGAINST the Client
+      </div>
+
+      <div class="panel-body">
+        {% if against_argument %}
+          {% for block in against_argument.split('\n\n') %}
+            {% if block.startswith:"C) **Conclusion:**" %}
+              <div class="irac-section">
+                <div class="irac-section-title">Conclusion</div>
+                <div class="irac-section-text">{{ block|cut:"C) **Conclusion:**"|linebreaksbr }}</div>
+              </div>
+            {% elif block.startswith:"R) **Rule & Precedent:**" %}
+              <div class="irac-section">
+                <div class="irac-section-title">Rule &amp; Precedent</div>
+                <div class="irac-section-text">{{ block|cut:"R) **Rule & Precedent:**"|linebreaksbr }}</div>
+              </div>
+            {% elif block.startswith:"E) **Explanation & Commentary:**" %}
+              <div class="irac-section">
+                <div class="irac-section-title">Explanation &amp; Commentary</div>
+                <div class="irac-section-text">{{ block|cut:"E) **Explanation & Commentary:**"|linebreaksbr }}</div>
+              </div>
+            {% elif block.startswith:"A) **Application:**" %}
+              <div class="irac-section">
+                <div class="irac-section-title">Application</div>
+                <div class="irac-section-text">{{ block|cut:"A) **Application:**"|linebreaksbr }}</div>
+              </div>
+            {% elif block.startswith:"R) **Rebuttal:**" %}
+              <div class="irac-section">
+                <div class="irac-section-title">Rebuttal</div>
+                <div class="irac-section-text">{{ block|cut:"R) **Rebuttal:**"|linebreaksbr }}</div>
+              </div>
+            {% elif block.startswith:"C) **Conclusion & Remedy:**" %}
+              <div class="irac-section">
+                <div class="irac-section-title">Conclusion &amp; Remedy</div>
+                <div class="irac-section-text">{{ block|cut:"C) **Conclusion & Remedy:**"|linebreaksbr }}</div>
+              </div>
+            {% else %}
+              <div class="irac-section-text">{{ block|linebreaksbr }}</div>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <p class="text-gray-500 italic">No AGAINST-argument available.</p>
+        {% endif %}
+      </div>
+
+      <div class="panel-footer">
+        <textarea
+          id="against-instruction"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-red-200 focus:outline-none"
+          rows="2"
+          placeholder="e.g. Challenge based on policy priorities…"
+        ></textarea>
+        <button
+          id="against-augment-btn"
+          data-side="against"
+          class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 rounded-lg"
+        >
+          Ask / Augment Argument
+        </button>
+        {% if against_feedback %}
+        <div class="mt-2 bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded-lg">
+          <div class="font-semibold text-yellow-800">Feedback</div>
+          <div class="text-yellow-700">{{ against_feedback|linebreaks }}</div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('button[data-side]').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const side = btn.dataset.side;
+    const instr = document.getElementById(`${side}-instruction`).value.trim();
+    if (!instr) { document.getElementById(`${side}-instruction`).focus(); return alert('Please enter your instruction.'); }
+
+    const panel = btn.closest('.panel');
+    const body = panel.querySelector('.panel-body');
+    const original = body.innerText;
+
+    btn.disabled = true;
+    btn.textContent = 'Processing…';
+
+    try {
+      const resp = await fetch("{% url 'augment_argument' %}", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({ side, original, instruction: instr })
+      });
+      const data = await resp.json();
+      if (data.augmented) {
+        // Re-split into IRAC blocks for display consistency
+        body.innerHTML = '';
+        data.augmented.split('\n\n').forEach(block => {
+          let title, key;
+          if (block.startsWith('C) **Conclusion:**'))       key = 'Conclusion';
+          else if (block.startsWith('R) **Rule & Precedent:**')) key = 'Rule & Precedent';
+          else if (block.startsWith('E) **Explanation & Commentary:**')) key = 'Explanation & Commentary';
+          else if (block.startsWith('A) **Application:**'))   key = 'Application';
+          else if (block.startsWith('R) **Rebuttal:**'))     key = 'Rebuttal';
+          else if (block.startsWith('C) **Conclusion & Remedy:**')) key = 'Conclusion & Remedy';
+          else key = null;
+
+          if (key) {
+            const section = document.createElement('div');
+            section.classList.add('irac-section');
+            section.innerHTML = `
+              <div class="irac-section-title">${key}</div>
+              <div class="irac-section-text">${block.replace(/^.*?:\*/,'').trim().replace(/\n/g,'<br>')}</div>
+            `;
+            body.appendChild(section);
+          } else {
+            const p = document.createElement('p');
+            p.classList.add('irac-section-text');
+            p.innerHTML = block.replace(/\n/g,'<br>');
+            body.appendChild(p);
+          }
+        });
+      } else {
+        alert('No augmented content returned.');
+      }
+    } catch (e) {
+      console.error(e);
+      alert('Error augmenting argument.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Ask / Augment Argument';
+    }
+  });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Petition Drafting</h1>
+<form method="post">{% csrf_token %} {{ form.as_p }}
+  <button type="submit">Generate Petition</button>
+</form>
+
+{% if petition_text %}
+  <h2>Generated Petition</h2>
+  <pre>{{ petition_text }}</pre>
+{% endif %}
+{% endblock %}

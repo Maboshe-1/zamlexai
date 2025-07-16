@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link
+  href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+  rel="stylesheet"
+/>
+<style>
+  /* Sidebar scroll */
+  .sidebar { max-height: calc(100vh - 4rem); overflow-y: auto; }
+  /* Argument scroll */
+  .panel-body { max-height: 16rem; overflow-y: auto; }
+  .scrollbar-thin::-webkit-scrollbar { width: 4px; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 2px; }
+  /* IRAC spacing */
+  .irac-section + .irac-section { margin-top: 1.5rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="flex h-screen">
+
+  <!-- Side Nav -->
+  <nav class="sidebar w-64 bg-gray-50 border-r border-gray-200 p-4 hidden md:block">
+    <h2 class="text-lg font-semibold mb-4">Saved Scenarios</h2>
+    <ul class="space-y-2">
+      {% for mem in memories %}
+      <li>
+        <a href="{% url 'load_scenario' mem.id %}"
+           class="block px-3 py-2 rounded hover:bg-gray-100">
+          {{ mem.title|truncatechars:25 }}
+        </a>
+      </li>
+      {% empty %}
+      <li class="text-gray-400 italic">No saved scenarios</li>
+      {% endfor %}
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col">
+
+    <!-- Header / Input -->
+    <header class="bg-white border-b border-gray-200 p-6">
+      <form method="post" class="flex flex-col md:flex-row md:space-x-4">
+        {% csrf_token %}
+        <textarea
+          name="scenario"
+          required
+          class="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-indigo-200 focus:outline-none mb-4 md:mb-0"
+          rows="3"
+          placeholder="Describe your legal scenario…"
+        >{{ request.POST.scenario }}</textarea>
+        <button
+          type="submit"
+          class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg"
+        >
+          Generate Arguments
+        </button>
+      </form>
+    </header>
+
+    <!-- Arguments & Augment -->
+    <main class="p-6 overflow-y-auto space-y-8">
+
+      <div class="grid gap-8 lg:grid-cols-2">
+
+        <!-- FOR the Client -->
+        <section class="flex flex-col bg-white border-l-4 border-indigo-600 rounded-lg shadow">
+          <header class="bg-indigo-50 px-6 py-3 rounded-t-lg">
+            <h3 class="text-lg font-semibold text-indigo-800">FOR the Client</h3>
+          </header>
+
+          <!-- FOR panel-body -->
+          <div class="panel-body p-6 prose prose-indigo scrollbar-thin">
+            {% if for_blocks %}
+              {% for block in for_blocks %}
+                <div class="irac-section">
+                  {% if block.label %}
+                    <h4 class="font-bold">{{ block.label }}</h4>
+                  {% endif %}
+                  <p>{{ block.text|linebreaksbr }}</p>
+                </div>
+              {% endfor %}
+            {% else %}
+              <p class="text-gray-500 italic">No argument generated yet.</p>
+            {% endif %}
+          </div>
+
+          <!-- FOR footer -->
+          <footer class="p-6 border-t border-gray-200">
+            <textarea
+              id="for-instruction"
+              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-200 focus:outline-none mb-2"
+              rows="2"
+              placeholder="e.g. Add a comparative example from Kenya…"
+            ></textarea>
+            <button
+              data-side="for"
+              class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-lg"
+              id="for-augment-btn"
+            >Ask / Augment</button>
+
+            {% if for_feedback %}
+            <div class="mt-4 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded">
+              <strong class="text-yellow-800">Feedback</strong>
+              <p class="mt-1 text-yellow-700">{{ for_feedback|linebreaks }}</p>
+            </div>
+            {% endif %}
+          </footer>
+        </section>
+
+        <!-- AGAINST the Client -->
+        <section class="flex flex-col bg-white border-r-4 border-red-600 rounded-lg shadow">
+          <header class="bg-red-50 px-6 py-3 rounded-t-lg">
+            <h3 class="text-lg font-semibold text-red-800">AGAINST the Client</h3>
+          </header>
+
+          <!-- AGAINST panel-body -->
+          <div class="panel-body p-6 prose prose-red scrollbar-thin">
+            {% if against_blocks %}
+              {% for block in against_blocks %}
+                <div class="irac-section">
+                  {% if block.label %}
+                    <h4 class="font-bold">{{ block.label }}</h4>
+                  {% endif %}
+                  <p>{{ block.text|linebreaksbr }}</p>
+                </div>
+              {% endfor %}
+            {% else %}
+              <p class="text-gray-500 italic">No argument generated yet.</p>
+            {% endif %}
+          </div>
+
+          <!-- AGAINST footer -->
+          <footer class="p-6 border-t border-gray-200">
+            <textarea
+              id="against-instruction"
+              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-200 focus:outline-none mb-2"
+              rows="2"
+              placeholder="e.g. Challenge based on policy priorities…"
+            ></textarea>
+            <button
+              data-side="against"
+              class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-lg"
+              id="against-augment-btn"
+            >Ask / Augment</button>
+
+            {% if against_feedback %}
+            <div class="mt-4 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded">
+              <strong class="text-yellow-800">Feedback</strong>
+              <p class="mt-1 text-yellow-700">{{ against_feedback|linebreaks }}</p>
+            </div>
+            {% endif %}
+          </footer>
+        </section>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('button[data-side]').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const side = btn.dataset.side;
+    const instrEl = document.getElementById(`${side}-instruction`);
+    const instruction = instrEl.value.trim();
+    if (!instruction) { instrEl.focus(); return alert('Enter your instruction.'); }
+
+    const panel = btn.closest('section');
+    const body = panel.querySelector('.panel-body');
+    const original = body.innerText;
+
+    btn.disabled = true;
+    btn.textContent = 'Processing…';
+
+    try {
+      const resp = await fetch("{% url 'augment_argument' %}", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}',
+        },
+        body: JSON.stringify({ side, original, instruction })
+      });
+      const data = await resp.json();
+      if (data.augmented) {
+        // Rebuild IRAC blocks in-place
+        body.innerHTML = '';
+        data.augmented_blocks.forEach(block => {
+          const sec = document.createElement('div');
+          sec.className = 'irac-section';
+          if (block.label) {
+            const h = document.createElement('h4');
+            h.className = 'font-bold';
+            h.textContent = block.label;
+            sec.appendChild(h);
+          }
+          const p = document.createElement('p');
+          p.innerHTML = block.text.replace(/\n/g,'<br>');
+          sec.appendChild(p);
+          body.appendChild(sec);
+        });
+      } else {
+        alert('No augmented content returned.');
+      }
+    } catch (e) {
+      console.error(e);
+      alert('Error augmenting argument.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Ask / Augment';
+    }
+  });
+});
+</script>
+{% endblock %}

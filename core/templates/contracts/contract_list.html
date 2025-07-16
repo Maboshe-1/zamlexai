@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block content %}
+<h1>Choose a Contract</h1>
+<ul class="space-y-4 mt-6">
+  <li>
+    <a href="{% url 'contract_nda' %}" class="btn">Non‑Disclosure Agreement</a>
+  </li>
+  <li>
+    <a href="{% url 'contract_sale' %}" class="btn">Sale of Goods Agreement</a>
+  </li>
+  <li><a href="{% url 'contract_lease' %}" class="btn">Lease Agreement</a></li>
+  <li>
+    <a href="{% url 'contract_employment' %}" class="btn"
+      >Employment Contract</a
+    >
+  </li>
+</ul>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link
+  href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+  rel="stylesheet"
+/>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto py-12 px-4">
+
+  <h1 class="text-3xl font-extrabold text-gray-900 mb-8">Employment Contract Generator</h1>
+
+  <!-- Form -->
+  <div class="bg-white rounded-lg shadow px-8 py-6 mb-10">
+    <form method="post" class="space-y-6">
+      {% csrf_token %}
+      {% for field in form %}
+        <div>
+          {{ field.label_tag }}
+          {{ field }}
+          {% if field.help_text %}
+            <p class="text-sm text-gray-500">{{ field.help_text }}</p>
+          {% endif %}
+          {{ field.errors }}
+        </div>
+      {% endfor %}
+      <button type="submit"
+              class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded">
+        Generate Contract
+      </button>
+    </form>
+  </div>
+
+  {% if draft %}
+  <!-- Draft Output -->
+  <div class="space-y-8">
+    <section>
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Contract Draft</h2>
+      <div class="bg-gray-50 p-6 rounded shadow overflow-x-auto whitespace-pre-wrap">
+        {{ draft }}
+      </div>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Risk Flagging</h2>
+      <div class="bg-yellow-50 p-6 rounded shadow overflow-x-auto whitespace-pre-wrap">
+        {{ risk_report }}
+      </div>
+    </section>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}
